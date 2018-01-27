@@ -12,8 +12,8 @@ export default class LocationChoice extends Component {
           </div>
         </div>
         <div className="card-footer">
-          <a className="card-footer-item">Nah</a>
-          <a className="card-footer-item">Sure</a>
+          <a className="card-footer-item" onClick={this.props.onNo}>Nah</a>
+          <a className="card-footer-item" onClick={this.props.onYes}>Sure</a>
         </div>
       </div>
     );
