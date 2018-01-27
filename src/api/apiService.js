@@ -5,9 +5,8 @@ import LocationsResult from './result/locationsResult';
 //-87.911980
 
 class APIService {
-  constructor(apiUrl, apiKey) {
+  constructor(apiUrl) {
     this.apiUrl = apiUrl;
-    this.apiKey = apiKey;
   }
 
   getLocations(lat, lng) {
@@ -20,8 +19,9 @@ class APIService {
     };
 
     return axios.get(url, config)
-      .then(res => new LocationsResult(res));
+      .then(res => new LocationsResult(res.data));
   }
 }
 
-export default new APIService();
+//TODO pull env vars
+export default new APIService('http://localhost:5000');

@@ -1,7 +1,8 @@
 export default class LocationsResult {
-  constructor(json) {
-    this._pageToken = json.next_page_token;
-    this._locations = JSON.parse(json.results);
+  constructor(response) {
+    console.log(response);
+    this._pageToken = response.next_page_token;
+    this._locations = response.results;
   }
 
   get pageToken() {

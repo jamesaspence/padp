@@ -1,0 +1,18 @@
+@import "../../../node_modules/bulma/sass/utilities/all";
+
+$border: $green;
+
+.card {
+  &.is-loading {
+    min-height: 229px;
+    color: transparent !important;
+    pointer-events: none;
+    &:after {
+      @include loader();
+      @include center(2.5em);
+      width: 2.5em;
+      height: 2.5em;
+      position: absolute !important;
+    }
+  }
+}
