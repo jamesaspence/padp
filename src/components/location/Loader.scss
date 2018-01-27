@@ -4,7 +4,7 @@ $border: $green;
 
 .card {
   &.is-loading {
-    min-height: 229px;
+    min-height: 205px;
     color: transparent !important;
     pointer-events: none;
     &:after {

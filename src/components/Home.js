@@ -17,26 +17,24 @@ export default class Home extends Component {
   onData(results) {
     this.setState({
       isLoading: false,
-      results: results
+      results: results,
+      locationIndex: 0
     });
   }
 
   componentDidMount() {
+    //TODO make lat n long dynamic
     const lat = '43.030129';
     const lng = '-87.911980';
     apiService.getLocations(lat, lng)
       .then(results => this.onData(results));
   }
-  //TODO load in API locations
-  //TODO show loader in the meantime maybe...?
 
   render() {
-    //TODO make dynamic
-    //TODO move call to componentDidMount
     return (
       <div className="columns is-centered">
         <div className="column is-half">
-          {this.state.isLoading ? <Loader/> : <LocationChoice location={this.state.results.locations[0]}/>}
+          {this.state.isLoading ? <Loader/> : <LocationChoice location={this.state.results.locations[this.state.locationIndex]}/>}
         </div>
       </div>
     );
