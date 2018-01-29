@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import LocationChoice from './location/LocationChoice';
-import Loader from './location/Loader';
+import Loader from './Loader';
 import apiService from '../api/apiService';
 
 export default class Home extends Component {

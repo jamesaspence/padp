@@ -1,7 +1,7 @@
 import {BrowserRouter, Route} from 'react-router-dom';
 import React, {Component} from 'react';
 
-import Loader from './location/Loader';
+import Loader from './Loader';
 
 /*
  * Include Components
@@ -38,7 +38,6 @@ export default class App extends Component {
     }
 
     window.navigator.geolocation.getCurrentPosition(position => {
-      console.log('success!');
       newState.lat = position.coords.latitude;
       newState.long = position.coords.longitude;
       this.setState(newState);
