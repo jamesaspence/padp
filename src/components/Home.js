@@ -6,8 +6,8 @@ import apiService from '../api/apiService';
 
 export default class Home extends Component {
 
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props);
     this.state = {
       isLoading: true,
       selectedLocations: []
@@ -27,11 +27,12 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    //TODO make lat n long dynamic
-    const lat = '43.030129';
-    const lng = '-87.911980';
-    apiService.getLocations(lat, lng)
-      .then(results => this.onData(results));
+    if (this.props.lat && this.props.long) {
+      const lat = this.props.lat;
+      const lng = this.props.long;
+      apiService.getLocations(lat, lng)
+        .then(results => this.onData(results));
+    }
   }
 
   onYes() {
@@ -61,11 +62,7 @@ export default class Home extends Component {
     }
 
     return (
-      <div className="columns is-centered">
-        <div className="column is-half">
-          {this.state.isLoading ? <Loader/> : <LocationChoice location={this.state.results.locations[this.state.locationIndex]} onNo={this.nextLocation} onYes={this.onYes}/>}
-        </div>
-      </div>
+        this.state.isLoading ? <Loader/> : <LocationChoice location={this.state.results.locations[this.state.locationIndex]} onNo={this.nextLocation} onYes={this.onYes}/>
     );
   }
 }
