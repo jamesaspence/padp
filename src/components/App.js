@@ -1,6 +1,8 @@
 import {BrowserRouter, Route} from 'react-router-dom';
 import React, {Component} from 'react';
 
+import './App.css';
+
 import Loader from './Loader';
 
 /*
@@ -60,9 +62,11 @@ export default class App extends Component {
     } else if (this.state.locationError) {
       child = (
         <div className="column is-half">
-          <div className="card">
+          <div className="card location-error">
+            <div className="card-header">
+              <h3 className="card-header-title">Uh Oh!</h3>
+            </div>
             <div className="card-content">
-              <h3 className="title">Uh oh!</h3>
               <p>Something went wrong retrieving your location.</p>
               <p>"{this.state.errorMessage}"</p>
             </div>
