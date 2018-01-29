@@ -28,8 +28,12 @@ export default class Home extends Component {
 
   componentDidMount() {
     if (this.props.lat && this.props.long) {
-      const lat = this.props.lat;
-      const lng = this.props.long;
+      //TODO switch back to dynamic
+      /*
+       * Coordinates for 5th ward, for testing
+       */
+      const lat = 43.030129;
+      const lng = -87.911980;
       apiService.getLocations(lat, lng)
         .then(results => this.onData(results));
     }
