@@ -66,7 +66,11 @@ export default class Home extends Component {
     }
 
     return (
-        this.state.isLoading ? <Loader/> : <LocationChoice location={this.state.results.locations[this.state.locationIndex]} onNo={this.nextLocation} onYes={this.onYes}/>
+      <div className="column is-half">
+        {
+          this.state.isLoading ? <Loader/> : <LocationChoice location={this.state.results.locations[this.state.locationIndex]} onNo={this.nextLocation} onYes={this.onYes}/>
+        }
+      </div>
     );
   }
 }

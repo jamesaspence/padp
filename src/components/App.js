@@ -52,14 +52,20 @@ export default class App extends Component {
     let child;
 
     if (!this.state.locationRequested) {
-      child = <Loader/>;
+      child = (
+        <div className="column is-half">
+          <Loader/>
+        </div>
+      );
     } else if (this.state.locationError) {
       child = (
-        <div className="card">
-          <div className="card-content">
-            <h3 className="title">Uh oh!</h3>
-            <p>Something went wrong retrieving your location.</p>
-            <p>"{this.state.errorMessage}"</p>
+        <div className="column is-half">
+          <div className="card">
+            <div className="card-content">
+              <h3 className="title">Uh oh!</h3>
+              <p>Something went wrong retrieving your location.</p>
+              <p>"{this.state.errorMessage}"</p>
+            </div>
           </div>
         </div>
       );
@@ -73,9 +79,7 @@ export default class App extends Component {
         <div>
           <Header/>
           <div className="columns is-centered">
-            <div className="column is-half">
-              {child}
-            </div>
+            {child}
           </div>
         </div>
       </BrowserRouter>
