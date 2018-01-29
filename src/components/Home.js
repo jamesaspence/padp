@@ -6,7 +6,7 @@ import apiService from '../api/apiService';
 
 export default class Home extends Component {
 
-  constructor(props, context) {
+  constructor(props) {
     super(props);
     this.state = {
       isLoading: true,
