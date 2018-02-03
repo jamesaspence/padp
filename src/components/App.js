@@ -2,6 +2,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import React, {Component} from 'react';
 
 import Loader from './Loader';
+import Error from './Error';
 
 /*
  * Include Components
@@ -12,7 +13,6 @@ import Header from './include/Header';
  * Route Components
  */
 import Home from './Home';
-import Error from './Error';
 
 export default class App extends Component {
   constructor() {
@@ -59,11 +59,7 @@ export default class App extends Component {
         </div>
       );
     } else if (this.state.locationError) {
-      child = (
-        <div className="column is-half">
-          <Error errorMessage={this.state.errorMessage}/>
-        </div>
-      );
+      child = <Error errorMessage={this.state.errorMessage}/>;
     } else {
       const render = routeProps => <Home {...routeProps} lat={this.state.lat} long={this.state.long} />;
       child = <Route exact path="/" render={render}/>;
