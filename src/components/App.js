@@ -14,6 +14,7 @@ import Header from './include/Header';
  * Route Components
  */
 import Home from './Home';
+import Error from './Error';
 
 export default class App extends Component {
   constructor() {
@@ -62,15 +63,7 @@ export default class App extends Component {
     } else if (this.state.locationError) {
       child = (
         <div className="column is-half">
-          <div className="card location-error">
-            <div className="card-header">
-              <h3 className="card-header-title">Uh Oh!</h3>
-            </div>
-            <div className="card-content">
-              <p>Something went wrong retrieving your location.</p>
-              <p>"{this.state.errorMessage}"</p>
-            </div>
-          </div>
+          <Error errorMessage={this.state.errorMessage}/>
         </div>
       );
     } else {
