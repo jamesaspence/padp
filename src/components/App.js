@@ -1,9 +1,8 @@
 import {BrowserRouter, Route} from 'react-router-dom';
 import React, {Component} from 'react';
 
-import './App.css';
-
 import Loader from './Loader';
+import Error from './Error';
 
 /*
  * Include Components
@@ -61,19 +60,7 @@ export default class App extends Component {
         </div>
       );
     } else if (this.state.locationError) {
-      children = (
-        <div className="column is-half">
-          <div className="card location-error">
-            <div className="card-header">
-              <h3 className="card-header-title">Uh Oh!</h3>
-            </div>
-            <div className="card-content">
-              <p>Something went wrong retrieving your location.</p>
-              <p>"{this.state.errorMessage}"</p>
-            </div>
-          </div>
-        </div>
-      );
+      children = <Error errorMessage={this.state.errorMessage}/>;
     } else {
       const render = routeProps => <Home {...routeProps} lat={this.state.lat} long={this.state.long} />;
       children = [
