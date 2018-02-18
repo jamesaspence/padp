@@ -14,6 +14,7 @@ import Header from './include/Header';
  * Route Components
  */
 import Home from './Home';
+import Voter from './Voter';
 
 export default class App extends Component {
   constructor() {
@@ -51,16 +52,16 @@ export default class App extends Component {
   }
 
   render() {
-    let child;
+    let children;
 
     if (!this.state.locationRequested) {
-      child = (
+      children = (
         <div className="column is-half">
           <Loader/>
         </div>
       );
     } else if (this.state.locationError) {
-      child = (
+      children = (
         <div className="column is-half">
           <div className="card location-error">
             <div className="card-header">
@@ -75,7 +76,10 @@ export default class App extends Component {
       );
     } else {
       const render = routeProps => <Home {...routeProps} lat={this.state.lat} long={this.state.long} />;
-      child = <Route exact path="/" render={render}/>;
+      children = [
+        <Route key="0" exact path="/" render={render}/>,
+        <Route key="1" path="/vote/:sessionId" component={Voter}/>
+      ];
     }
 
     return (
@@ -83,7 +87,7 @@ export default class App extends Component {
         <div>
           <Header/>
           <div className="columns is-centered">
-            {child}
+            {children}
           </div>
         </div>
       </BrowserRouter>

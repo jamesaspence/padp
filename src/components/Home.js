@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import LocationChoice from './location/LocationChoice';
 import Loader from './Loader';
@@ -43,10 +44,23 @@ export default class Home extends Component {
     const selectedLocations = this.state.selectedLocations;
     selectedLocations.push(this.state.results.locations[this.state.locationIndex]);
     console.log(selectedLocations);
-    this.setState({
+    const newState = {
       selectedLocations: selectedLocations,
       locationIndex: this.state.locationIndex + 1
-    });
+    };
+
+    if (newState.locationIndex > 19 || newState.selectedLocations.length > 4) {
+      newState.isLoading = true;
+      apiService.createNewVote(newState.selectedLocations)
+        .then(result => {
+          console.log('returned result!');
+          console.log('redirecting hopefully');
+          console.log(result);
+          this.setState({sessionId: result.sessionId})
+        });
+    }
+
+    this.setState(newState);
   }
 
   nextLocation() {
@@ -56,13 +70,10 @@ export default class Home extends Component {
   }
 
   render() {
-    if (this.state.locationIndex > 19 || this.state.selectedLocations.length > 4) {
-      return (
-        <div className="locations">
-          Selected locations
-          {this.state.selectedLocations.map(((location, i) => <div key={i}>{location.name}</div>))}
-        </div>
-      );
+    if (this.state.sessionId) {
+      console.log('session ID is set!');
+      console.log('redirecting.');
+      return <Redirect to={`/vote/${this.state.sessionId}`}/>;
     }
 
     return (
