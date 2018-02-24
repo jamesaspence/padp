@@ -15,8 +15,7 @@ export default class Voter extends Component {
     const sessionId = this.props.match.params.sessionId;
     //TODO remove hardcoded URL
     let socket = io('http://localhost:5000/' + sessionId);
-    socket.on('userJoined', () => this.setState({users: this.state.users + 1}));
-    socket.on('userLeft', () => this.setState({users: this.state.users - 1}));
+    socket.on('userCount', e => this.setState({users: e.count}));
   }
 
   render() {

@@ -73,7 +73,8 @@ export default class Home extends Component {
     if (this.state.sessionId) {
       console.log('session ID is set!');
       console.log('redirecting.');
-      return <Redirect to={`/vote/${this.state.sessionId}`}/>;
+      const sessionId = this.state.sessionId.startsWith('/') ? this.state.sessionId : `/${this.state.sessionId}`;
+      return <Redirect to={`/vote${sessionId}`}/>;
     }
 
     return (
