@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 
 import LocationChoice from './location/LocationChoice';
 import Loader from './Loader';
+import Error from './Error';
+
 import apiService from '../api/apiService';
 
 export default class Home extends Component {
@@ -11,11 +13,16 @@ export default class Home extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      selectedLocations: []
+      selectedLocations: [],
+      locationError: false,
+      errorMessage: null,
+      lat: null,
+      long: null
     };
     this.onData = this.onData.bind(this);
     this.nextLocation = this.nextLocation.bind(this);
     this.onYes = this.onYes.bind(this);
+    this.onLocation = this.onLocation.bind(this);
   }
 
   onData(results) {
@@ -28,16 +35,36 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    if (this.props.lat && this.props.long) {
-      //TODO switch back to dynamic
-      /*
-       * Coordinates for 5th ward, for testing
-       */
-      const lat = 43.030129;
-      const lng = -87.911980;
-      apiService.getLocations(lat, lng)
-        .then(results => this.onData(results));
+    const newState = {};
+
+    if (!('geolocation' in window.navigator)) {
+      newState.locationError = true;
+      newState.errorMessage = 'Unable to retrieve location - no navigator available.';
+      this.setState(newState);
+      return;
     }
+
+    window.navigator.geolocation.getCurrentPosition(position => {
+      newState.lat = position.coords.latitude;
+      newState.long = position.coords.longitude;
+      this.setState(newState);
+      this.onLocation();
+    }, e => {
+      newState.locationError = true;
+      newState.errorMessage = e.message;
+      this.setState(newState);
+    });
+  }
+
+  onLocation() {
+    //TODO switch back to dynamic
+    const lat = 43.030129;
+    const lng = -87.911980;
+    apiService.getLocations(lat, lng)
+      .then(results => this.onData(results))
+      .catch(e => this.setState({
+        errorMessage: 'Unable to retrieve locations.'
+      }));
   }
 
   onYes() {
@@ -70,6 +97,10 @@ export default class Home extends Component {
   }
 
   render() {
+    if (this.state.errorMessage !== null) {
+      return <Error errorMessage={this.state.errorMessage}/>
+    }
+
     if (this.state.sessionId) {
       console.log('session ID is set!');
       console.log('redirecting.');

@@ -11,15 +11,13 @@ export default class Error extends Component {
 
   render() {
     return (
-      <div className="column is-half">
-        <div className="card location-error">
-          <div className="card-header">
-            <h3 className="card-header-title">{this.props.title}</h3>
-          </div>
-          <div className="card-content">
-            <p>{this.props.subheader}</p>
-            <p>"{this.props.errorMessage}"</p>
-          </div>
+      <div className="card location-error">
+        <div className="card-header">
+          <h3 className="card-header-title">{this.props.title}</h3>
+        </div>
+        <div className="card-content">
+          <p>{this.props.subheader}</p>
+          <p>"{this.props.errorMessage}"</p>
         </div>
       </div>
     );
