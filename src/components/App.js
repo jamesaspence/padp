@@ -62,9 +62,9 @@ export default class App extends Component {
     } else if (this.state.locationError) {
       children = <Error errorMessage={this.state.errorMessage}/>;
     } else {
-      const render = routeProps => <Home {...routeProps} lat={this.state.lat} long={this.state.long} />;
+      const renderHome = routeProps => <Home {...routeProps} lat={this.state.lat} long={this.state.long} />;
       children = [
-        <Route key="0" exact path="/" render={render}/>,
+        <Route key="0" exact path="/" render={renderHome}/>,
         <Route key="1" path="/vote/:sessionId" component={Voter}/>
       ];
     }
