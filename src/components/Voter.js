@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import io from 'socket.io-client';
 
+import LocationSidebar from './location/LocationSidebar';
+import Map from './Map';
+
 export default class Voter extends Component {
   constructor(props) {
     super(props);
@@ -20,10 +23,10 @@ export default class Voter extends Component {
 
   render() {
     return (
-      <div>
-        {this.props.match.params.sessionId}
-        <div>{this.state.users}</div>
-      </div>
+      [
+        <LocationSidebar/>,
+        <Map/>
+      ]
     );
   }
 }

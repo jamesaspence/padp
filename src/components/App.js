@@ -64,9 +64,10 @@ export default class App extends Component {
     // }
 
     const renderHome = routeProps => <Home {...routeProps} lat={this.state.lat} long={this.state.long} />;
+    //TODO find way to wrap entirety of app in flex
     return (
       <BrowserRouter>
-        <div>
+        <div className="app-root">
           <Header/>
           <div className="columns is-centered">
             <Route key="0" exact path="/" render={renderHome}/>,
