@@ -1,0 +1,12 @@
+@import "../../../node_modules/bulma/sass/utilities/initial-variables.sass";
+
+.voter-button {
+
+  &.voted, &:hover {
+    color: $white;
+    background-color: $green;
+  }
+
+  color: $green;
+  font-weight: bold;
+}

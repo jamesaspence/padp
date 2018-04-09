@@ -1,18 +1,34 @@
 import React, {Component} from 'react';
 
-export default class VoteableLocation extends Component {
-  render() {
-    return (
-      //<div className="tile is-warning notification">
-      //  Hi!
-      //</div>
-      // <div className="box">
-      //   <div className="content">
-      //     <div className="title">Hello?</div>
-      //
-      //   </div>
-      // </div>
+import './VoteableLocation.css';
 
+export default class VoteableLocation extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      votedFor: false
+    };
+
+    this.changeVote = this.changeVote.bind(this);
+  }
+
+  changeVote() {
+    this.setState({
+      votedFor: (!this.state.votedFor)
+    });
+  }
+
+  render() {
+    let voterClassNames = "card-footer-item voter-button";
+
+    if (this.state.votedFor) {
+      voterClassNames+= " voted";
+    }
+
+    //TODO add voter button to bottom
+    return (
       <div className="card">
         <div className="card-content">
           <h3 className="title">Title!</h3>
@@ -21,8 +37,7 @@ export default class VoteableLocation extends Component {
           </div>
         </div>
         <div className="card-footer">
-          <a className="card-footer-item">Nah</a>
-          <a className="card-footer-item">Sure</a>
+          <a className={voterClassNames} onClick={this.changeVote}>{this.state.votedFor ? 'Voted' : 'Vote'}</a>
         </div>
       </div>
     )
