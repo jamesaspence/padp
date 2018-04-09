@@ -69,7 +69,7 @@ export default class App extends Component {
       <BrowserRouter>
         <div className="app-root">
           <Header/>
-          <Route key="0" exact path="/" render={renderHome}/>,
+          <Route key="0" exact path="/" render={renderHome}/>
           <Route key="1" path="/vote/:sessionId" component={Voter}/>
         </div>
       </BrowserRouter>
