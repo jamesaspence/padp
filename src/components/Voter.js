@@ -23,11 +23,9 @@ export default class Voter extends Component {
 
   render() {
     return (
-      <div className="section is-fullheight">
-        <div className="columns">
-          <LocationSidebar/>
-          <Map/>
-        </div>
+      <div className="columns">
+        <LocationSidebar/>
+        <Map/>
       </div>
     );
   }
