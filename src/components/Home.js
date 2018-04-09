@@ -44,16 +44,17 @@ export default class Home extends Component {
       return;
     }
 
-    window.navigator.geolocation.getCurrentPosition(position => {
-      newState.lat = position.coords.latitude;
-      newState.long = position.coords.longitude;
-      this.setState(newState);
-      this.onLocation();
-    }, e => {
-      newState.locationError = true;
-      newState.errorMessage = e.message;
-      this.setState(newState);
-    });
+    this.onLocation();
+    // window.navigator.geolocation.getCurrentPosition(position => {
+    //   newState.lat = position.coords.latitude;
+    //   newState.long = position.coords.longitude;
+    //   this.setState(newState);
+    //   this.onLocation();
+    // }, e => {
+    //   newState.locationError = true;
+    //   newState.errorMessage = e.message;
+    //   this.setState(newState);
+    // });
   }
 
   onLocation() {

@@ -1,10 +1,11 @@
 @import "variables";
 @import "../node_modules/bulma/bulma";
 
-body {
+html, body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  box-sizing: border-box;
 }
 
 .content-root {
@@ -12,9 +13,10 @@ body {
 }
 
 #logo {
-  width: 75px;
-  height: auto;
+  width: auto;
+  height: 80px;
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 10;
 }
