@@ -67,7 +67,7 @@ export default class App extends Component {
     //TODO find way to wrap entirety of app in flex
     return (
       <BrowserRouter>
-        <div className="app-root">
+        <div className="content-root">
           <Header/>
           <Route key="0" exact path="/" render={renderHome}/>
           <Route key="1" path="/vote/:sessionId" component={Voter}/>
