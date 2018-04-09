@@ -9,8 +9,6 @@ export default class LocationSidebar extends Component {
     return (
       <div className="column is-one-quarter location-sidebar" key="locations">
         <div className="is-fullheight">
-          <VoteableLocation votedFor={true}/>
-          <VoteableLocation votedFor={true}/>
           <VoteableLocation/>
           <VoteableLocation/>
           <VoteableLocation/>
@@ -21,16 +19,18 @@ export default class LocationSidebar extends Component {
           <VoteableLocation/>
           <VoteableLocation/>
           <VoteableLocation/>
-          <VoteableLocation votedFor={true}/>
-          <VoteableLocation/>
-          <VoteableLocation/>
-          <VoteableLocation votedFor={true}/>
           <VoteableLocation/>
           <VoteableLocation/>
           <VoteableLocation/>
           <VoteableLocation/>
-          <VoteableLocation votedFor={true}/>
-          <VoteableLocation votedFor={true}/>
+          <VoteableLocation/>
+          <VoteableLocation/>
+          <VoteableLocation/>
+          <VoteableLocation/>
+          <VoteableLocation/>
+          <VoteableLocation/>
+          <VoteableLocation/>
+          <VoteableLocation/>
           <VoteableLocation/>
         </div>
       </div>
