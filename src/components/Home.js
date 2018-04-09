@@ -109,10 +109,12 @@ export default class Home extends Component {
     }
 
     return (
-      <div className="column is-half">
-        {
-          this.state.isLoading ? <Loader/> : <LocationChoice location={this.state.results.locations[this.state.locationIndex]} onNo={this.nextLocation} onYes={this.onYes}/>
-        }
+      <div className="columns is-centered">
+        <div className="column is-half">
+          {
+            this.state.isLoading ? <Loader/> : <LocationChoice location={this.state.results.locations[this.state.locationIndex]} onNo={this.nextLocation} onYes={this.onYes}/>
+          }
+        </div>
       </div>
     );
   }

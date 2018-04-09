@@ -69,10 +69,8 @@ export default class App extends Component {
       <BrowserRouter>
         <div className="app-root">
           <Header/>
-          <div className="columns is-centered">
-            <Route key="0" exact path="/" render={renderHome}/>,
-            <Route key="1" path="/vote/:sessionId" component={Voter}/>
-          </div>
+          <Route key="0" exact path="/" render={renderHome}/>,
+          <Route key="1" path="/vote/:sessionId" component={Voter}/>
         </div>
       </BrowserRouter>
     );
