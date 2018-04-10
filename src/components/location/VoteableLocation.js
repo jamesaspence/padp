@@ -29,7 +29,7 @@ export default class VoteableLocation extends Component {
 
     //TODO add voter button to bottom
     return (
-      <div className="card">
+      <div className="card voter-location">
         <div className="card-content">
           <h3 className="title">Title!</h3>
           <div className="address-content">
