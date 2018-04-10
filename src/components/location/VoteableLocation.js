@@ -31,9 +31,9 @@ export default class VoteableLocation extends Component {
     return (
       <div className="card voter-location">
         <div className="card-content">
-          <h3 className="title">Title!</h3>
+          <h3 className="title">{this.props.title}</h3>
           <div className="address-content">
-            <p className="address-one">Content Line One</p>
+            <p className="address-one">#{this.props.number}</p>
           </div>
         </div>
         <div className="card-footer">
