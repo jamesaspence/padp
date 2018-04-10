@@ -15,4 +15,7 @@ $border: $green;
       position: absolute !important;
     }
   }
+  &.no-shadow {
+    box-shadow: none;
+  }
 }
