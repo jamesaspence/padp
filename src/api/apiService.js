@@ -1,6 +1,7 @@
 import axios from 'axios';
 import LocationsResult from './result/locationsResult';
 import NewSessionResult from './result/newSessionResult';
+import LocationDataResult from './result/locationDataResult';
 
 //43.030129
 //-87.911980
@@ -34,6 +35,12 @@ class APIService {
 
     return axios.post(url, body, headers)
       .then(res => new NewSessionResult(res.data));
+  }
+
+  getVoterData(key) {
+    const url = `${this.apiUrl}/data/${key}`;
+    return axios.get(url)
+      .then(res => new LocationDataResult(res.data));
   }
 }
 
