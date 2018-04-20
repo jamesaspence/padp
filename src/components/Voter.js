@@ -6,6 +6,8 @@ import LocationSidebar from './location/LocationSidebar';
 import Map from './Map';
 import Loader from './Loader';
 
+import {fitBounds} from 'google-map-react/utils';
+
 export default class Voter extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,7 @@ export default class Voter extends Component {
     };
 
     this.onLocationData = this.onLocationData.bind(this);
-    this.findAverageLatAndLong = this.findAverageLatAndLong.bind(this);
+    this.findMapBounds = this.findMapBounds.bind(this);
   }
 
   componentDidMount() {
@@ -40,23 +42,44 @@ export default class Voter extends Component {
 
     this.setState({
       locations: votedLocations,
-      center: this.findAverageLatAndLong(locations),
+      bounds: this.findMapBounds(votedLocations),
       locationsLoaded: true
     });
   }
 
-  findAverageLatAndLong(rawLocations) {
-    let totalLat = 0;
-    let totalLong = 0;
-    rawLocations.forEach(location => {
-      totalLat+= location.geometry.location.lat;
-      totalLong+= location.geometry.location.lng;
+  findMapBounds(locations) {
+    const lats = [];
+    const longs = [];
+
+    locations.forEach(location => {
+      const lat = location.data.geometry.location.lat;
+      const lng = location.data.geometry.location.lng;
+
+      lats.push(lat);
+      longs.push(lng);
     });
 
-    const totalNumberOfUsers = rawLocations.length;
+    //long is EW
+    //lat is NS
+    //max long is east
+    //max lat is N
+
+    //We need SW and NE
+    //NE = max long/lat, min long/lat
+    const minLat = Math.min(...lats);
+    const minLng = Math.min(...longs);
+    const maxLat = Math.max(...lats);
+    const maxLng = Math.max(...longs);
+
     return {
-      lat: totalLat / totalNumberOfUsers,
-      lng: totalLong / totalNumberOfUsers
+      ne: {
+        lat: maxLat,
+        lng: maxLng
+      },
+      sw: {
+        lat: minLat,
+        lng: minLng
+      }
     };
   }
 
@@ -74,7 +97,7 @@ export default class Voter extends Component {
     return (
       <div className="columns">
         <LocationSidebar locations={this.state.locations}/>
-        <Map center={this.state.center} locations={this.state.locations}/>
+        <Map center={this.state.center} bounds={this.state.bounds} locations={this.state.locations}/>
       </div>
     );
   }
