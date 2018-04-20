@@ -29,6 +29,7 @@ export default class Map extends Component {
   }
 
   render() {
+    //TODO only render markers if center and zoom are set
     const Marker = ({name}) => <p>{name}</p>;
 
     // this.props.locations.forEach(location => console.log(location.data.geometry.location.lat, location.data.geometry.location.lng));
