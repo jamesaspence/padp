@@ -10,14 +10,16 @@ export default class Login extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    window.gapi.signin2.render('my-signin2', {
-      'scope': 'profile email',
-      'width': 200,
-      'height': 50,
-      'longtitle': true,
-      'theme': 'dark',
-      'onsuccess': this.onLogin
+  componentWillMount() {
+    window.gapi.load('auth2', () => {
+      window.gapi.auth2.init({
+        client_id: process.env.REACT_APP_CLIENT_ID
+      }).then(auth => {
+        if (auth.isSignedIn.get()) {
+          console.log('hooray');
+          this.onLogin(auth.currentUser.get());
+        }
+      });
     });
   }
 
@@ -36,7 +38,7 @@ export default class Login extends Component {
 
   render() {
     if (this.state.user) {
-      return <Redirect to="/home"/>
+      {return <Redirect to="/home"/>}
     }
 
     return (
