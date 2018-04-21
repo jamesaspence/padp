@@ -60,7 +60,7 @@ export default class Map extends Component {
           defaultCenter={{lat: 0, lng: 0}}
           defaultZoom={12}
           bootstrapURLKeys={{
-            key: process.env.REACT_APP_MAPS_TOKEN
+            key: process.env.REACT_APP_API_TOKEN
           }}
         >
           {locationMarkers}

@@ -27,13 +27,16 @@ export default class App extends Component {
     this.onLogin = this.onLogin.bind(this);
   }
 
-  onLogin(response) {
-    console.log(response);
+  onLogin(user) {
+    this.setState({
+      user: user
+    });
   }
 
   render() {
-    const renderHome = routeProps => <Home {...routeProps} lat={this.state.lat} long={this.state.long} />;
+    const renderHome = routeProps => <Home {...routeProps} lat={this.state.lat} long={this.state.long} user={this.state.user} />;
     const renderLogin = routeProps => <Login onLogin={this.onLogin} />;
+
     return (
       <BrowserRouter>
         <div className="content-root">
