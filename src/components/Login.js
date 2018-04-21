@@ -5,41 +5,37 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      googleUser: null
+    };
     this.onLogin = this.onLogin.bind(this);
-
-    this.state = {};
   }
 
-  componentWillMount() {
-    window.gapi.load('auth2', () => {
-      window.gapi.auth2.init({
-        client_id: process.env.REACT_APP_CLIENT_ID
-      }).then(auth => {
-        if (auth.isSignedIn.get()) {
-          console.log('hooray');
-          this.onLogin(auth.currentUser.get());
-        }
-      });
+  componentDidMount() {
+    window.gapi.signin2.render('my-signin2', {
+      'scope': 'profile email',
+      'width': 200,
+      'height': 50,
+      'longtitle': true,
+      'theme': 'dark',
+      'onsuccess': this.onLogin
     });
   }
 
   onLogin(googleUser) {
-    const user = {
-      googleUser: googleUser,
-      email: googleUser.getBasicProfile().getEmail(),
-      id: googleUser.getId()
-    };
-
-    this.props.onLogin(user);
+    this.props.onLogin(googleUser);
     this.setState({
-      user: user
+      googleUser: googleUser
     });
   }
 
   render() {
-    if (this.state.user) {
-      {return <Redirect to="/home"/>}
+
+    if (this.state.googleUser !== null) {
+      console.log('here?');
+      return <Redirect to="/home"/>;
     }
+    console.log('rendering');
 
     return (
       <div className="columns is-centered">
