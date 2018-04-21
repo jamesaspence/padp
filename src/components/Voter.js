@@ -6,8 +6,6 @@ import LocationSidebar from './location/LocationSidebar';
 import Map from './Map';
 import Loader from './Loader';
 
-import {fitBounds} from 'google-map-react/utils';
-
 export default class Voter extends Component {
   constructor(props) {
     super(props);

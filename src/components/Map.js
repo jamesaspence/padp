@@ -15,7 +15,6 @@ export default class Map extends Component {
     const height = element.offsetHeight;
 
     const bounds = this.props.bounds;
-    console.log(bounds);
 
     const {center, zoom} = fitBounds(bounds, {
       width: width,
@@ -29,7 +28,6 @@ export default class Map extends Component {
   }
 
   render() {
-    //TODO only render markers if center and zoom are set
     const Marker = ({name}) => <p>{name}</p>;
 
     // this.props.locations.forEach(location => console.log(location.data.geometry.location.lat, location.data.geometry.location.lng));
@@ -47,22 +45,23 @@ export default class Map extends Component {
       );
     });
 
-    const props = {
-      bootstrapURLKeys: {
-        key: process.env.REACT_APP_MAPS_TOKEN
-      }
-    };
+    const props = {};
 
     const state = this.state;
     if (state.hasOwnProperty('center') && state.hasOwnProperty('zoom')) {
-      props.defaultCenter = state.center;
-      props.defaultZoom = state.zoom;
+      props.center = state.center;
+      props.zoom = state.zoom;
     }
 
     return (
       <div className="column is-three-quarters" key="map" ref={this.getWidthAndHeight}>
         <GoogleMap
           {...props}
+          defaultCenter={{lat: 0, lng: 0}}
+          defaultZoom={12}
+          bootstrapURLKeys={{
+            key: process.env.REACT_APP_MAPS_TOKEN
+          }}
         >
           {locationMarkers}
         </GoogleMap>
