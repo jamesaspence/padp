@@ -1,4 +1,4 @@
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 import React, {Component} from 'react';
 
 /*
@@ -10,6 +10,7 @@ import Header from './include/Header';
  * Route Components
  */
 import Home from './Home';
+import Login from './Login';
 import Voter from './Voter';
 
 export default class App extends Component {
@@ -30,8 +31,12 @@ export default class App extends Component {
       <BrowserRouter>
         <div className="content-root">
           <Header/>
-          <Route key="0" exact path="/" render={renderHome}/>
-          <Route key="1" path="/vote/:sessionId" component={Voter}/>
+          <Switch>
+            <Route key="0" exact path="/home" render={renderHome}/>
+            <Route key="1" exact path="/login" component={Login}/>
+            <Route key="2" path="/vote/:sessionId" component={Voter}/>
+            <Redirect from="/" to="/login"/>
+          </Switch>
         </div>
       </BrowserRouter>
     );
