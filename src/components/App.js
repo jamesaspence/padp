@@ -6,6 +6,8 @@ import React, {Component} from 'react';
  */
 import Header from './include/Header';
 
+import Loader from './Loader';
+
 /*
  * Route Components
  */
@@ -22,21 +24,40 @@ export default class App extends Component {
       errorMessage: null,
       lat: null,
       long: null,
-      user: null
+      user: null,
+      userStatusRetrieved: false
     };
 
     this.onLogin = this.onLogin.bind(this);
     this.renderRoutesAndRedirects = this.renderRoutesAndRedirects.bind(this);
+    this.renderLoader = this.renderLoader.bind(this);
+    this.initializeGAPI = this.initializeGAPI.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this.initializeGAPI();
+  }
+
+  initializeGAPI() {
+    //We need this check because sometimes this var is not ready yet
+    //We timeout and try again in 10 ms
+    if (typeof window.gapi === 'undefined') {
+      setTimeout(this.initializeGAPI, 10);
+      return;
+    }
+
     window.gapi.load('auth2', () => {
       window.gapi.auth2.init({
         client_id: process.env.REACT_APP_CLIENT_ID
       }).then(auth => {
         if (auth.isSignedIn.get()) {
           this.onLogin(auth.currentUser.get());
+          return;
         }
+
+        this.setState({
+          userStatusRetrieved: true
+        });
       });
     });
   }
@@ -49,7 +70,8 @@ export default class App extends Component {
     };
 
     this.setState({
-      user: user
+      user: user,
+      userStatusRetrieved: true
     });
   }
 
@@ -76,12 +98,22 @@ export default class App extends Component {
     );
   }
 
+  renderLoader() {
+    return (
+      <div className="columns is-centered">
+        <div className="column is-half">
+          <Loader/>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <BrowserRouter>
         <div className="content-root">
           <Header/>
-          {this.renderRoutesAndRedirects()}
+          {this.state.userStatusRetrieved ? this.renderRoutesAndRedirects() : this.renderLoader()}
         </div>
       </BrowserRouter>
     );
