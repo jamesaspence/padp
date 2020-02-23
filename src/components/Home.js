@@ -25,14 +25,6 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      isLoading: true,
-      selectedLocations: [],
-      locationError: false,
-      errorMessage: null,
-      lat: null,
-      long: null
-    };
     this.onData = this.onData.bind(this);
     this.nextLocation = this.nextLocation.bind(this);
     this.onYes = this.onYes.bind(this);
@@ -134,12 +126,12 @@ class Home extends Component {
       return <Error errorMessage="Unable to retrieve locations right now."/>
     }
 
-    if (this.state.sessionId) {
-      console.log('session ID is set!');
-      console.log('redirecting.');
-      const sessionId = this.state.sessionId.startsWith('/') ? this.state.sessionId : `/${this.state.sessionId}`;
-      return <Redirect to={`/vote${sessionId}`}/>;
-    }
+    // if (this.state.sessionId) {
+    //   console.log('session ID is set!');
+    //   console.log('redirecting.');
+    //   const sessionId = this.state.sessionId.startsWith('/') ? this.state.sessionId : `/${this.state.sessionId}`;
+    //   return <Redirect to={`/vote${sessionId}`}/>;
+    // }
 
     return (
       <div className="columns is-centered">
