@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import './VoteableLocation.css';
+import './VoteableLocation.scss';
 
 export default class VoteableLocation extends Component {
 

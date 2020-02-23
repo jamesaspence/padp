@@ -21,7 +21,7 @@ serviceWorker.unregister();
 
 // import React from 'react';
 // import ReactDOM from 'react-dom';
-// import './index.css';
+// import './index.scss';
 // import App from './components/App';
 // import registerServiceWorker from './registerServiceWorker';
 //
