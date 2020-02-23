@@ -1,21 +1,21 @@
 import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 import React, {Component} from 'react';
-
-/*
- * Include Components
- */
+import { connect } from 'react-redux';
 import Header from './include/Header';
-
 import Loader from './Loader';
-
-/*
- * Route Components
- */
 import Home from './Home';
 import Login from './Login';
 import Voter from './Voter';
+import { getUser } from '../redux/selectors/user';
+import { userRetrievedStatus } from '../redux/actions/user';
 
-export default class App extends Component {
+const mapStateToProps = state => getUser(state);
+
+const mapDispatchToProps = dispatch => ({
+  getUserRetrievedStatus: (status, user) => dispatch(userRetrievedStatus(status, user))
+});
+
+class App extends Component {
   constructor() {
     super();
     this.state = {
@@ -24,8 +24,7 @@ export default class App extends Component {
       errorMessage: null,
       lat: null,
       long: null,
-      user: null,
-      userStatusRetrieved: false
+      user: null
     };
 
     this.onLogin = this.onLogin.bind(this);
@@ -55,9 +54,7 @@ export default class App extends Component {
           return;
         }
 
-        this.setState({
-          userStatusRetrieved: true
-        });
+        this.props.getUserRetrievedStatus(true, null);
       });
     });
   }
@@ -69,20 +66,19 @@ export default class App extends Component {
       id: googleUser.getId()
     };
 
-    this.setState({
-      user: user,
-      userStatusRetrieved: true
-    });
+    this.props.getUserRetrievedStatus(true, user);
   }
 
   renderRoutesAndRedirects() {
+    const { user } = this.props;
+
     const renderLogin = routeProps => <Login {...routeProps} onLogin={this.onLogin} />;
 
     const components = [];
-    const hasUser = this.state.user !== null;
+    const hasUser = user !== null;
 
     if (hasUser) {
-      const renderHome = routeProps => <Home {...routeProps} lat={this.state.lat} long={this.state.long} user={this.state.user} />;
+      const renderHome = routeProps => <Home {...routeProps} lat={this.state.lat} long={this.state.long} user={user} />;
       components.push(<Route key="home" exact path="/home" render={renderHome}/>);
       components.push(<Route key="voter" path="/vote/:sessionId" component={Voter}/>);
       components.push(<Redirect key="rootRedirect" from="/" to={hasUser ? '/home' : '/login'}/>);
@@ -109,13 +105,17 @@ export default class App extends Component {
   }
 
   render() {
+    const { retrieved } = this.props;
+
     return (
       <BrowserRouter>
         <div className="content-root">
           <Header/>
-          {this.state.userStatusRetrieved ? this.renderRoutesAndRedirects() : this.renderLoader()}
+          {retrieved ? this.renderRoutesAndRedirects() : this.renderLoader()}
         </div>
       </BrowserRouter>
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
