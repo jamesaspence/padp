@@ -5,9 +5,19 @@ import LocationChoice from './location/LocationChoice';
 import Loader from './Loader';
 import Error from './Error';
 
-import apiService from '../api/apiService';
+import { connect } from 'react-redux';
+import { getNextPlace } from '../redux/selectors/locations';
+import { getPlaces, incrementPlace, selectPlace } from '../redux/actions/locations';
 
-export default class Home extends Component {
+const mapStateToProps = getNextPlace;
+
+const mapDispatchToProps = dispatch => ({
+  getPlaces: (lat, long) => dispatch(getPlaces(lat, long)),
+  incrementPlace: () => dispatch(incrementPlace()),
+  selectPlace: place => dispatch(selectPlace(place))
+});
+
+class Home extends Component {
 
   constructor(props) {
     super(props);
@@ -58,46 +68,57 @@ export default class Home extends Component {
   }
 
   onLocation() {
+
     //TODO switch back to dynamic
     const lat = 43.030129;
-    const lng = -87.911980;
-    apiService.getLocations(lat, lng)
-      .then(results => this.onData(results))
-      .catch(e => this.setState({
-        errorMessage: 'Unable to retrieve locations.'
-      }));
+    const long = -87.911980;
+    this.props.getPlaces(lat, long);
   }
 
   onYes() {
-    const selectedLocations = this.state.selectedLocations;
-    selectedLocations.push(this.state.results.locations[this.state.locationIndex]);
-    console.log(selectedLocations);
-    const newState = {
-      selectedLocations: selectedLocations,
-      locationIndex: this.state.locationIndex + 1
-    };
+    const { place } = this.props;
 
-    if (newState.locationIndex > 19 || newState.selectedLocations.length > 4) {
-      newState.isLoading = true;
-      apiService.createNewVote(newState.selectedLocations)
-        .then(result => {
-          console.log('returned result!');
-          console.log('redirecting hopefully');
-          console.log(result);
-          this.setState({sessionId: result.sessionId})
-        });
+    if (place == null) {
+      //TODO error out - this should not happen here though.
+      return;
     }
+    // const selectedLocations = this.state.selectedLocations;
+    // selectedLocations.push(this.state.results.locations[this.state.locationIndex]);
+    // const newState = {
+    //   selectedLocations: selectedLocations,
+    //   locationIndex: this.state.locationIndex + 1
+    // };
+    //
+    // if (newState.locationIndex > 19 || newState.selectedLocations.length > 4) {
+    //   newState.isLoading = true;
+    //   //TODO move to redux
+    //   apiService.createNewVote(newState.selectedLocations)
+    //     .then(result => {
+    //       console.log('returned result!');
+    //       console.log('redirecting hopefully');
+    //       console.log(result);
+    //       this.setState({sessionId: result.sessionId})
+    //     });
+    // }
 
-    this.setState(newState);
+    this.props.incrementPlace();
+    this.props.selectPlace(place);
   }
 
   nextLocation() {
-    this.setState({
-      locationIndex: this.state.locationIndex + 1
-    });
+    this.props.incrementPlace();
+    // this.setState({
+    //   locationIndex: this.state.locationIndex + 1
+    // });
   }
 
   render() {
+    console.log('props', this.props);
+    const { place } = this.props;
+
+    //TODO check for null place earlier
+    //TODO check for error and handle differently if error
+
     if (this.state.errorMessage !== null) {
       return <Error errorMessage={this.state.errorMessage}/>
     }
@@ -109,14 +130,17 @@ export default class Home extends Component {
       return <Redirect to={`/vote${sessionId}`}/>;
     }
 
+    console.log('place', place);
     return (
       <div className="columns is-centered">
         <div className="column is-half">
           {
-            this.state.isLoading ? <Loader/> : <LocationChoice location={this.state.results.locations[this.state.locationIndex]} onNo={this.nextLocation} onYes={this.onYes}/>
+            place == null ? <Loader/> : <LocationChoice location={place} onNo={this.nextLocation} onYes={this.onYes}/>
           }
         </div>
       </div>
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
