@@ -6,10 +6,14 @@ import Loader from './Loader';
 import Error from './Error';
 
 import { connect } from 'react-redux';
-import { getNextPlace } from '../redux/selectors/places';
+import { getNextPlace, getSelectedPlaces } from '../redux/selectors/places';
 import { getPlaces, incrementPlace, selectPlace } from '../redux/actions/places';
+import { STATUS_ERROR, STATUS_SUCCESS } from '../redux/actions';
 
-const mapStateToProps = getNextPlace;
+const mapStateToProps = state =>  ({
+  ...getNextPlace(state),
+  ...getSelectedPlaces(state)
+});
 
 const mapDispatchToProps = dispatch => ({
   getPlaces: (lat, long) => dispatch(getPlaces(lat, long)),
@@ -113,14 +117,21 @@ class Home extends Component {
   }
 
   render() {
-    console.log('props', this.props);
-    const { place } = this.props;
+    const { place, status } = this.props;
+
+    if (status === STATUS_SUCCESS) {
+      return (
+        <div className="columns is-centered">
+          <div className="column is-half">
+            <LocationChoice location={place} onNo={this.nextLocation} onYes={this.onYes}/>
+          </div>
+        </div>
+      )
+    }
 
     //TODO check for null place earlier
-    //TODO check for error and handle differently if error
-
-    if (this.state.errorMessage !== null) {
-      return <Error errorMessage={this.state.errorMessage}/>
+    if (status === STATUS_ERROR) {
+      return <Error errorMessage="Unable to retrieve locations right now."/>
     }
 
     if (this.state.sessionId) {
@@ -130,13 +141,10 @@ class Home extends Component {
       return <Redirect to={`/vote${sessionId}`}/>;
     }
 
-    console.log('place', place);
     return (
       <div className="columns is-centered">
         <div className="column is-half">
-          {
-            place == null ? <Loader/> : <LocationChoice location={place} onNo={this.nextLocation} onYes={this.onYes}/>
-          }
+          <Loader/>
         </div>
       </div>
     );
