@@ -4,6 +4,7 @@ import { STATUS_ERROR, STATUS_LOADING, STATUS_SUCCESS } from './index';
 export const INCREMENT_PLACE = 'INCREMENT_PLACE';
 export const SELECT_PLACE = 'SELECT_PLACE';
 export const RETRIEVE_PLACES_STATUS = 'RETRIEVE_PLACES_STATUS';
+export const FINISH_SELECTIONS = 'FINISH_SELECTIONS';
 
 export const getPlaces = (lat, long, pageToken = null) => async dispatch => {
   //Set to loading only the first time results are loaded
@@ -32,3 +33,16 @@ export const selectPlace = place => ({
   type: SELECT_PLACE,
   place
 });
+
+export const finishSelections = selections => async (dispatch, getState) => {
+  const response = await apiService.createNewVote(selections);
+
+  const { user: { user } } = getState();
+
+  dispatch({
+    type: FINISH_SELECTIONS,
+    selections,
+    sessionId: response.sessionId,
+    user
+  });
+};

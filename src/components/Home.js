@@ -7,24 +7,27 @@ import Error from './Error';
 
 import { connect } from 'react-redux';
 import { getNextPlace, getSelectedPlaces } from '../redux/selectors/places';
-import { getPlaces, incrementPlace, selectPlace } from '../redux/actions/places';
+import { finishSelections, getPlaces, incrementPlace, selectPlace } from '../redux/actions/places';
 import { STATUS_ERROR, STATUS_SUCCESS } from '../redux/actions';
+import { getSessionId } from '../redux/selectors/voting';
 
 const mapStateToProps = state =>  ({
   ...getNextPlace(state),
-  ...getSelectedPlaces(state)
+  ...getSelectedPlaces(state),
+  ...getSessionId(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   getPlaces: (lat, long) => dispatch(getPlaces(lat, long)),
   incrementPlace: () => dispatch(incrementPlace()),
-  selectPlace: place => dispatch(selectPlace(place))
+  selectPlace: place => dispatch(selectPlace(place)),
+  finishSelections: selections => dispatch(finishSelections(selections))
 });
 
 class Home extends Component {
-
   constructor(props) {
     super(props);
+
     this.onData = this.onData.bind(this);
     this.nextLocation = this.nextLocation.bind(this);
     this.onYes = this.onYes.bind(this);
@@ -78,24 +81,6 @@ class Home extends Component {
       //TODO error out - this should not happen here though.
       return;
     }
-    // const selectedLocations = this.state.selectedLocations;
-    // selectedLocations.push(this.state.results.locations[this.state.locationIndex]);
-    // const newState = {
-    //   selectedLocations: selectedLocations,
-    //   locationIndex: this.state.locationIndex + 1
-    // };
-    //
-    // if (newState.locationIndex > 19 || newState.selectedLocations.length > 4) {
-    //   newState.isLoading = true;
-    //   //TODO move to redux
-    //   apiService.createNewVote(newState.selectedLocations)
-    //     .then(result => {
-    //       console.log('returned result!');
-    //       console.log('redirecting hopefully');
-    //       console.log(result);
-    //       this.setState({sessionId: result.sessionId})
-    //     });
-    // }
 
     this.props.incrementPlace();
     this.props.selectPlace(place);
@@ -103,15 +88,28 @@ class Home extends Component {
 
   nextLocation() {
     this.props.incrementPlace();
-    // this.setState({
-    //   locationIndex: this.state.locationIndex + 1
-    // });
   }
 
   render() {
-    const { place, status } = this.props;
+    const { place, status, selected, sessionId } = this.props;
 
     if (status === STATUS_SUCCESS) {
+      if (sessionId != null) {
+        return <Redirect to={`/vote${sessionId}`}/>
+      }
+
+      if (place == null || selected.length > 4) {
+        //TODO handle if no selections are selected - game over then
+        this.props.finishSelections(selected);
+        return (
+          <div className="columns is-centered">
+            <div className="column is-half">
+              <Loader/>
+            </div>
+          </div>
+        );
+      }
+
       return (
         <div className="columns is-centered">
           <div className="column is-half">
@@ -121,17 +119,9 @@ class Home extends Component {
       )
     }
 
-    //TODO check for null place earlier
     if (status === STATUS_ERROR) {
       return <Error errorMessage="Unable to retrieve locations right now."/>
     }
-
-    // if (this.state.sessionId) {
-    //   console.log('session ID is set!');
-    //   console.log('redirecting.');
-    //   const sessionId = this.state.sessionId.startsWith('/') ? this.state.sessionId : `/${this.state.sessionId}`;
-    //   return <Redirect to={`/vote${sessionId}`}/>;
-    // }
 
     return (
       <div className="columns is-centered">
