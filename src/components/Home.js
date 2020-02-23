@@ -6,8 +6,8 @@ import Loader from './Loader';
 import Error from './Error';
 
 import { connect } from 'react-redux';
-import { getNextPlace } from '../redux/selectors/locations';
-import { getPlaces, incrementPlace, selectPlace } from '../redux/actions/locations';
+import { getNextPlace } from '../redux/selectors/places';
+import { getPlaces, incrementPlace, selectPlace } from '../redux/actions/places';
 
 const mapStateToProps = getNextPlace;
 
