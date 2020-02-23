@@ -16,16 +16,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      locationRequested: false,
-      locationError: false,
-      errorMessage: null,
-      lat: null,
-      long: null,
-      user: null
-    };
+  constructor(props) {
+    super(props);
 
     this.onLogin = this.onLogin.bind(this);
     this.renderRoutesAndRedirects = this.renderRoutesAndRedirects.bind(this);
@@ -79,7 +71,7 @@ class App extends Component {
     const hasUser = user !== null;
 
     if (hasUser) {
-      const renderHome = routeProps => <Home {...routeProps} lat={this.state.lat} long={this.state.long} user={user} />;
+      const renderHome = routeProps => <Home {...routeProps} user={user} />;
       components.push(<Route key="home" exact path="/home" render={renderHome}/>);
       components.push(<Route key="voter" path="/vote/:sessionId" component={Voter}/>);
       components.push(<Redirect key="rootRedirect" from="/" to={hasUser ? '/home' : '/login'}/>);
