@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { STATUSES } from '../../redux/actions/user';
@@ -17,7 +17,9 @@ const AuthBoundary = ({ status, user, children, redirectToLogin }) => {
   //Otherwise, redirect
   if (user != null || status === STATUSES.LOADING) {
     console.log('allowing through, user loaded or loading');
-    return children;
+    return (<Fragment>
+      {children}
+    </Fragment>);
   }
 
   console.log('redirecting to login!');

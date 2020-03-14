@@ -37,7 +37,7 @@ export default class VoteableLocation extends Component {
           </div>
         </div>
         <div className="card-footer">
-          <a className={voterClassNames} onClick={this.changeVote}>{this.state.votedFor ? 'Voted' : 'Vote'}</a>
+          <div className={voterClassNames} onClick={this.changeVote}>{this.state.votedFor ? 'Voted' : 'Vote'}</div>
         </div>
       </div>
     )

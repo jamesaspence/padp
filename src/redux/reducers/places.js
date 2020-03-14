@@ -20,11 +20,11 @@ const placesReducer = (state = DEFAULT_STATE, action) => {
       return incrementPlaceReducer(state);
     case SELECT_PLACE:
       return selectPlaceReducer(state, action);
+    default:
+      return {
+        ...state
+      };
   }
-
-  return {
-    ...state
-  };
 };
 
 const retrievePlacesStatusReducer = (state, action) => {
