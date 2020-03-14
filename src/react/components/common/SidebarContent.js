@@ -1,12 +1,12 @@
 import React from 'react';
 import './SidebarContent.scss';
-import LogoAwareWrap from './LogoAwareWrap';
+import ContentWrap from './ContentWrap';
 
 const SidebarContent = ({ children }) => (
   <div className="sidebar-content column is-one-quarter">
-    <LogoAwareWrap>
+    <ContentWrap logoAware={true}>
       {children}
-    </LogoAwareWrap>
+    </ContentWrap>
   </div>
 );
 

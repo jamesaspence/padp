@@ -1,22 +1,15 @@
 import React from 'react';
 import './App.scss';
 import Logo from './components/common/Logo';
-import ContentContainer from './components/common/ContentContainer';
-import SidebarContent from './components/common/SidebarContent';
-import MainContent from './components/common/MainContent';
+import { Route, Redirect } from 'react-router-dom';
+import Login from './pages/NewLogin';
 
 const App = () => {
   return (
     <div className="app">
       <Logo/>
-      <ContentContainer>
-        <SidebarContent>
-          <h1>Sidebar!</h1>
-        </SidebarContent>
-        <MainContent>
-          <h2>Main Content!!</h2>
-        </MainContent>
-      </ContentContainer>
+      <Route exact path="/login" component={Login} />
+      <Route path="*" render={() => <Redirect to="/login" />} />
     </div>
   )
 };
