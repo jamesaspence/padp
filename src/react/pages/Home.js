@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import LocationChoice from './location/LocationChoice';
-import Loader from './Loader';
-import Error from './Error';
+import LocationChoice from '../components/location/LocationChoice';
+import Loader from '../components/Loader';
+import Error from '../components/Error';
 
 import { connect } from 'react-redux';
-import { getNextPlace, getSelectedPlaces } from '../redux/selectors/places';
-import { finishSelections, getPlaces, incrementPlace, selectPlace } from '../redux/actions/places';
-import { STATUS_ERROR, STATUS_SUCCESS } from '../redux/actions';
-import { getSessionId } from '../redux/selectors/voting';
+import { getNextPlace, getSelectedPlaces } from '../../redux/selectors/places';
+import { finishSelections, getPlaces, incrementPlace, selectPlace } from '../../redux/actions/places';
+import { STATUS_ERROR, STATUS_SUCCESS } from '../../redux/actions';
+import { getSessionId } from '../../redux/selectors/voting';
 
 const mapStateToProps = state =>  ({
   ...getNextPlace(state),

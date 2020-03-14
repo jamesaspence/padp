@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import io from 'socket.io-client';
-import apiService from '../api/apiService';
+import apiService from '../../api/apiService';
 
-import LocationSidebar from './location/LocationSidebar';
-import Map from './Map';
-import Loader from './Loader';
+import LocationSidebar from '../components/location/LocationSidebar';
+import Map from '../components/Map';
+import Loader from '../components/Loader';
 
 export default class Voter extends Component {
   constructor(props) {
