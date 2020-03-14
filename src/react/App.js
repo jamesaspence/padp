@@ -7,7 +7,6 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Voter from './pages/Voter';
 import { verifyAuth, authFailure } from '../redux/actions/user';
-import AuthBoundary from './boundaries/AuthBoundary';
 
 const mapStateToProps = ({ user: { user, status } }) => ({
   user,
@@ -55,17 +54,15 @@ class App extends Component {
     const renderHome = routeProps => <Home {...routeProps} user={user} />;
 
     return (
-      <AuthBoundary>
-        <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/home" render={renderHome}/>
-          <Route path="/vote/:sessionId" component={Voter}/>
-          <Route path="*" render={() => {
-            console.log('catchall firing?');
-            return <Redirect to="/home" />
-          }} />
-        </Switch>
-      </AuthBoundary>
+      <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/home" render={renderHome}/>
+        <Route path="/vote/:sessionId" component={Voter}/>
+        <Route path="*" render={() => {
+          console.log('catchall firing?');
+          return <Redirect to="/home" />
+        }} />
+      </Switch>
     );
   }
 
