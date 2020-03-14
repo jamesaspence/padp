@@ -6,8 +6,8 @@ import Loader from './Loader';
 import Home from './Home';
 import Login from './Login';
 import Voter from './Voter';
-import { getUser } from '../redux/selectors/user';
-import { userRetrievedStatus } from '../redux/actions/user';
+import { getUser } from '../../redux/selectors/user';
+import { userRetrievedStatus } from '../../redux/actions/user';
 
 const mapStateToProps = state => getUser(state);
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import io from 'socket.io-client';
-import apiService from '../api/apiService';
+import apiService from '../../api/apiService';
 
 import LocationSidebar from './location/LocationSidebar';
 import Map from './Map';
