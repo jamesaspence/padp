@@ -1,0 +1,5 @@
+@import '../../../variables';
+
+.logo-aware-wrap {
+  height: calc(100vh - #{$logo-wrap-height});
+}

@@ -1,3 +1,5 @@
+@import '../../../variables';
+
 .logo {
   position: fixed;
   top: 0;
@@ -5,7 +7,7 @@
 
   .logo-image {
     width: auto;
-    height: 80px;
+    height: $logo-height;
     z-index: 10;
   }
 }
