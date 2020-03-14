@@ -4,13 +4,6 @@
 $borderColor: rgba(10, 10, 10, 0.1);
 
 .sidebar-content.column {
-  padding-top: 100px;
   border-right: 1px solid $borderColor;
   padding-right: 0;
-
-  .is-fullheight {
-    height: calc(100vh - 100px);
-    overflow-y: auto;
-    border-top: 1px solid $borderColor;
-  }
 }

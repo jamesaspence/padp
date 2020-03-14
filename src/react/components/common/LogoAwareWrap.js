@@ -1,8 +1,8 @@
 import React from 'react';
 import './LogoAwareWrap.scss';
 
-const LogoAwareWrap = ({ children, className }) => (
-  <div className={`logo-aware-wrap ${className}`}>
+const LogoAwareWrap = ({ children }) => (
+  <div className="logo-aware-wrap">
     {children}
   </div>
 );

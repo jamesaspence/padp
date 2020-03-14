@@ -4,7 +4,7 @@ import LogoAwareWrap from './LogoAwareWrap';
 
 const SidebarContent = ({ children }) => (
   <div className="sidebar-content column is-one-quarter">
-    <LogoAwareWrap className="is-fullheight">
+    <LogoAwareWrap>
       {children}
     </LogoAwareWrap>
   </div>
