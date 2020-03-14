@@ -19,37 +19,37 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.onLogin = this.onLogin.bind(this);
-    this.renderRoutesAndRedirects = this.renderRoutesAndRedirects.bind(this);
-    this.renderLoader = this.renderLoader.bind(this);
-    this.initializeGAPI = this.initializeGAPI.bind(this);
+    // this.onLogin = this.onLogin.bind(this);
+    // this.renderRoutesAndRedirects = this.renderRoutesAndRedirects.bind(this);
+    // this.renderLoader = this.renderLoader.bind(this);
+    // this.initializeGAPI = this.initializeGAPI.bind(this);
   }
 
   componentDidMount() {
-    this.initializeGAPI();
+    // this.initializeGAPI();
   }
 
   initializeGAPI() {
     //We need this check because sometimes this var is not ready yet
     //We timeout and try again in 10 ms
-    if (typeof window.gapi === 'undefined') {
-      setTimeout(this.initializeGAPI, 10);
-      return;
-    }
+    // if (typeof window.gapi === 'undefined') {
+    //   setTimeout(this.initializeGAPI, 10);
+    //   return;
+    // }
 
     //TODO switch to API-based JWT auth (short lived tokens ONLY)
-    window.gapi.load('auth2', () => {
-      window.gapi.auth2.init({
-        client_id: process.env.REACT_APP_CLIENT_ID
-      }).then(auth => {
-        if (auth.isSignedIn.get()) {
-          this.onLogin(auth.currentUser.get());
-          return;
-        }
-
-        this.props.getUserRetrievedStatus(true, null);
-      });
-    });
+    // window.gapi.load('auth2', () => {
+    //   window.gapi.auth2.init({
+    //     client_id: process.env.REACT_APP_CLIENT_ID
+    //   }).then(auth => {
+    //     if (auth.isSignedIn.get()) {
+    //       this.onLogin(auth.currentUser.get());
+    //       return;
+    //     }
+    //
+    this.props.getUserRetrievedStatus(true, null);
+    //   });
+    // });
   }
 
   onLogin(googleUser) {
@@ -104,7 +104,7 @@ class App extends Component {
       <BrowserRouter>
         <div className="content-root">
           <Header/>
-          {retrieved ? this.renderRoutesAndRedirects() : this.renderLoader()}
+          <Login onLogin={this.onLogin} />
         </div>
       </BrowserRouter>
     );

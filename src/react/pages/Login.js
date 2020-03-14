@@ -1,46 +1,44 @@
 import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
+import LoginButton from '../components/auth/LoginButton';
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      googleUser: null
-    };
-    this.onLogin = this.onLogin.bind(this);
+    this.onGoogleSignInSuccess = this.onGoogleSignInSuccess.bind(this);
+    this.onGoogleSignInFailure = this.onGoogleSignInFailure.bind(this);
   }
 
-  componentDidMount() {
-    window.gapi.signin2.render('my-signin2', {
-      'scope': 'profile email',
-      'width': 200,
-      'height': 50,
-      'longtitle': true,
-      'theme': 'dark',
-      'onsuccess': this.onLogin
-    });
+  async onGoogleSignInSuccess(response) {
+    const email = response.getBasicProfile().getEmail();
+
+    if (email == null) {
+      //TODO handle failure
+      return;
+    }
+
+    const idToken = response.getAuthResponse().id_token;
+    console.log('idToken', idToken);
+
+    //TODO authenticate w/ Google on server, generate JWT
+    //TODO redirect once logged in
   }
 
-  onLogin(googleUser) {
-    this.props.onLogin(googleUser);
-    this.setState({
-      googleUser: googleUser
-    });
+  onGoogleSignInFailure() {
+    //TODO handle properly
   }
 
   render() {
-
-    if (this.state.googleUser !== null) {
-      console.log('here?');
-      return <Redirect to="/home"/>;
-    }
-    console.log('rendering');
-
     return (
       <div className="columns is-centered">
         <div className="column is-half">
-          <div id="my-signin2"></div>
+          <GoogleLogin
+            onSuccess={this.onGoogleSignInSuccess}
+            onFailure={this.onGoogleSignInFailure}
+            clientId={process.env.REACT_APP_CLIENT_ID}
+            render={({ onClick, disabled}) => <LoginButton onClick={onClick} disabled={disabled} />}
+          />
         </div>
       </div>
     );
