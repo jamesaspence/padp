@@ -32,8 +32,6 @@ class Login extends Component {
 
     const idToken = response.getAuthResponse().id_token;
 
-    console.log('idToken', idToken);
-
     this.props.triggerAuthentication(idToken);
   }
 
@@ -45,7 +43,6 @@ class Login extends Component {
     const { user, status, redirectHome } = this.props;
 
     if (user != null && status === STATUSES.SUCCESS) {
-      console.log('Redirecting to home!');
       redirectHome();
       return null;
     }

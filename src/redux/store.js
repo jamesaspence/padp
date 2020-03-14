@@ -10,13 +10,14 @@ export const registerAuthChangeSubscriber = store => {
   let currentStatus = null;
 
   //TODO ensure it updates w/ logout/login
+  //TODO do some cleanup of storage on logout
+  //TODO potentially use to set token in state?
   store.subscribe(() => {
     let previousStatus = currentStatus;
     const { status, token } = store.getState().user;
     currentStatus = status;
 
     if (currentStatus === STATUSES.SUCCESS && previousStatus !== currentStatus && token != null) {
-      console.log(`storing token ${token} in localStorage.`);
       window.localStorage.setItem('accessToken', token);
     }
   });

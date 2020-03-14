@@ -31,7 +31,6 @@ class App extends Component {
 
     const token = window.localStorage.getItem('accessToken');
     if (token == null) {
-      console.log('no token, redirecting');
       missingToken();
       return;
     }
@@ -58,17 +57,13 @@ class App extends Component {
         <Route exact path="/login" component={Login} />
         <Route exact path="/home" render={renderHome}/>
         <Route exact path="/vote/:sessionId" component={Voter}/>
-        <Route path="*" render={() => {
-          console.log('catchall firing?');
-          return <Redirect to="/home" />
-        }} />
+        <Route path="*" render={() => <Redirect to="/home" />} />
       </Switch>
     );
   }
 
   render() {
     const { user, status } = this.props;
-    console.log('status', status);
 
     return (
       <BrowserRouter>

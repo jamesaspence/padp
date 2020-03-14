@@ -30,7 +30,6 @@ export const authenticate = token => async dispatch => {
 
   let response;
   try {
-    console.log('triggering api call!');
     response = await apiService.authenticate(token);
   } catch (e) {
     console.error('e', e);

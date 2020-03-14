@@ -46,7 +46,6 @@ class APIService {
   authenticate(idToken) {
     const url = `${this.apiUrl}/oauth`;
 
-    console.log('making request (apiService)');
     return axios.post(url, {}, {
       headers: {
         Authorization: `Bearer ${idToken}`

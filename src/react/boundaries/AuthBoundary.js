@@ -16,13 +16,13 @@ const AuthBoundary = ({ status, user, children, redirectToLogin }) => {
   //if user is not null or loading is current status, allow through
   //Otherwise, redirect
   if (user != null || status === STATUSES.LOADING) {
-    console.log('allowing through, user loaded or loading');
-    return (<Fragment>
-      {children}
-    </Fragment>);
+    return (
+      <Fragment>
+        {children}
+      </Fragment>
+    );
   }
 
-  console.log('redirecting to login!');
   redirectToLogin();
   return null;
 };
