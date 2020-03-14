@@ -1,8 +1,8 @@
 import React from 'react';
 import './MainContent.scss';
 
-const MainContent = ({ children, sidebarPresent = false }) => (
-  <div className={`main-content column ${sidebarPresent ? 'is-three-quarters' : ''}`}>
+const MainContent = ({ children }) => (
+  <div className="main-content column">
     {children}
   </div>
 );

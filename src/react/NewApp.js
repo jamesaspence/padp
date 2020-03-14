@@ -13,7 +13,7 @@ const App = () => {
         <SidebarContent>
           <h1>Sidebar!</h1>
         </SidebarContent>
-        <MainContent sidebarPresent={true}>
+        <MainContent>
           <h2>Main Content!!</h2>
         </MainContent>
       </ContentContainer>
