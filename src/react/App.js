@@ -57,7 +57,7 @@ class App extends Component {
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/home" render={renderHome}/>
-        <Route path="/vote/:sessionId" component={Voter}/>
+        <Route exact path="/vote/:sessionId" component={Voter}/>
         <Route path="*" render={() => {
           console.log('catchall firing?');
           return <Redirect to="/home" />
@@ -74,8 +74,7 @@ class App extends Component {
       <BrowserRouter>
           <div className="content-root">
             <Header/>
-            { user == null && status == null ? this.renderLoader() : null}
-            <Login />
+            { user == null && status == null ? this.renderLoader() : this.renderRoutes() }
           </div>
       </BrowserRouter>
     );
