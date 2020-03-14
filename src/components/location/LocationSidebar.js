@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import VoteableLocation from './VoteableLocation';
 
-import './LocationSidebar.css';
+import './LocationSidebar.scss';
 
 export default class LocationSidebar extends Component {
   render() {

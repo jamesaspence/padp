@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import './Error.css';
+import './Error.scss';
 
 export default class Error extends Component {
   static defaultProps = {
