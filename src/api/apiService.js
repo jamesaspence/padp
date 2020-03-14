@@ -42,6 +42,16 @@ class APIService {
     return axios.get(url)
       .then(res => new LocationDataResult(res.data));
   }
+
+  authenticate(idToken) {
+    const url = `${this.apiUrl}/oauth`;
+
+    return axios.post(url, {}, {
+      headers: {
+        Authorization: `Bearer ${idToken}`
+      }
+    });
+  }
 }
 
 //TODO pull env vars

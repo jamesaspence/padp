@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import GoogleLogin from 'react-google-login';
 import LoginButton from '../components/auth/LoginButton';
+import apiService from '../../api/apiService';
 
 export default class Login extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ export default class Login extends Component {
     const idToken = response.getAuthResponse().id_token;
     console.log('idToken', idToken);
 
+    apiService.authenticate(idToken).then(res => console.log('res', res));
     //TODO authenticate w/ Google on server, generate JWT
     //TODO redirect once logged in
   }
