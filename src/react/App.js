@@ -1,13 +1,13 @@
 import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import Header from './include/Header';
-import Loader from './Loader';
-import Home from './Home';
-import Login from './Login';
-import Voter from './Voter';
-import { getUser } from '../../redux/selectors/user';
-import { userRetrievedStatus } from '../../redux/actions/user';
+import Header from './components/include/Header';
+import Loader from './components/Loader';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Voter from './pages/Voter';
+import { getUser } from '../redux/selectors/user';
+import { userRetrievedStatus } from '../redux/actions/user';
 
 const mapStateToProps = state => getUser(state);
 

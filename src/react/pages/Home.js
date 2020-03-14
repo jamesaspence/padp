@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import LocationChoice from './location/LocationChoice';
-import Loader from './Loader';
-import Error from './Error';
+import LocationChoice from '../components/location/LocationChoice';
+import Loader from '../components/Loader';
+import Error from '../components/Error';
 
 import { connect } from 'react-redux';
 import { getNextPlace, getSelectedPlaces } from '../../redux/selectors/places';
