@@ -1,9 +1,20 @@
 import React, {Component} from 'react';
 import GoogleLogin from 'react-google-login';
 import LoginButton from '../components/auth/LoginButton';
-import apiService from '../../api/apiService';
+import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
+import { authenticate, STATUSES } from '../../redux/actions/user';
 
-export default class Login extends Component {
+const mapStateToProps = ({ user: { status, user } }) => ({
+  status, user
+});
+
+const mapDispatchToProps = dispatch => ({
+  redirectHome: () => dispatch(push('/home')),
+  triggerAuthentication: idToken => dispatch(authenticate(idToken))
+});
+
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -20,11 +31,10 @@ export default class Login extends Component {
     }
 
     const idToken = response.getAuthResponse().id_token;
+
     console.log('idToken', idToken);
 
-    apiService.authenticate(idToken).then(res => console.log('res', res));
-    //TODO authenticate w/ Google on server, generate JWT
-    //TODO redirect once logged in
+    this.props.triggerAuthentication(idToken);
   }
 
   onGoogleSignInFailure() {
@@ -32,6 +42,14 @@ export default class Login extends Component {
   }
 
   render() {
+    const { user, status, redirectHome } = this.props;
+
+    if (user != null && status === STATUSES.SUCCESS) {
+      console.log('Redirecting to home!');
+      redirectHome();
+      return null;
+    }
+
     return (
       <div className="columns is-centered">
         <div className="column is-half">
@@ -46,3 +64,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
