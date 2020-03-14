@@ -1,7 +1,7 @@
 import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import Header from './components/include/Header';
+import Logo from './components/common/Logo';
 import Loader from './components/Loader';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -68,7 +68,7 @@ class App extends Component {
     return (
       <BrowserRouter>
           <div className="content-root">
-            <Header/>
+            <Logo/>
             { user == null && status == null ? this.renderLoader() : this.renderRoutes() }
           </div>
       </BrowserRouter>

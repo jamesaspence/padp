@@ -1,0 +1,11 @@
+.logo {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  .logo-image {
+    width: auto;
+    height: 80px;
+    z-index: 10;
+  }
+}
