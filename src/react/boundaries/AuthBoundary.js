@@ -9,7 +9,7 @@ const mapStateToProps = ({ user: { status, user } }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  redirectToLogin: () => dispatch(push('/login'))
+  redirectToLogin: () => push('/login')
 });
 
 const AuthBoundary = ({ status, user, children, redirectToLogin }) => {

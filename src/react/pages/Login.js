@@ -10,7 +10,7 @@ const mapStateToProps = ({ user: { status, user } }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  redirectHome: () => dispatch(push('/home')),
+  redirectHome: () => push('/home'),
   triggerAuthentication: idToken => dispatch(authenticate(idToken))
 });
 
