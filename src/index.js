@@ -5,10 +5,9 @@ import App from './react/App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import configureStore, { history, registerAuthChangeSubscriber } from './redux/store';
+import configureStore, { history } from './redux/store';
 
 const store = configureStore();
-registerAuthChangeSubscriber(store);
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>

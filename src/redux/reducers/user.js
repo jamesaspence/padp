@@ -1,10 +1,29 @@
 import { AUTH_STATUS, STATUSES } from '../actions/user';
+import { getAccessToken } from '../../service/localStorage';
+import * as jwt from 'jsonwebtoken';
 
 export const DEFAULT_STATE = {
   status: null,
   user: null,
   token: null,
   error: null
+};
+
+export const getPreloadedState = () => {
+  const token = getAccessToken();
+
+  if (token == null) {
+    return DEFAULT_STATE;
+  }
+
+  const user = jwt.decode(token);
+
+  return {
+    ...DEFAULT_STATE,
+    status: STATUSES.SUCCESS,
+    user,
+    token
+  };
 };
 
 const userReducer = (state = DEFAULT_STATE, action) => {

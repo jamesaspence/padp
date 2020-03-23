@@ -1,30 +1,30 @@
-import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { STATUSES } from '../../redux/actions/user';
 
-const mapStateToProps = ({ user: { status, user } }) => ({
-  status,
-  user
-});
+const AuthBoundary = ({ children }) => {
+  const selectUserStatus = state => state.user.status;
+  const selectUser = state => state.user.user;
 
-const mapDispatchToProps = dispatch => ({
-  redirectToLogin: () => push('/login')
-});
+  const status = useSelector(selectUserStatus);
+  const user = useSelector(selectUser);
 
-const AuthBoundary = ({ status, user, children, redirectToLogin }) => {
+  console.log('authBoundaryUser', user);
+  console.log('status', status);
   //if user is not null or loading is current status, allow through
   //Otherwise, redirect
   if (user != null || status === STATUSES.LOADING) {
+    console.log('passing through???');
     return (
-      <Fragment>
+      <>
         {children}
-      </Fragment>
+      </>
     );
   }
 
-  redirectToLogin();
-  return null;
+  console.log('redirecting!!');
+  return <Redirect to="/login" />;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthBoundary);
+export default AuthBoundary;
