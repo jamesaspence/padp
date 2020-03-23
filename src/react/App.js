@@ -2,7 +2,7 @@ import React from 'react';
 import './App.scss';
 import Logo from './components/common/Logo';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import Login from './pages/NewLogin';
+import Login from './pages/Login';
 import AuthBoundary from './boundaries/AuthBoundary';
 import Home from './pages/NewHome';
 
