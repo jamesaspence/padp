@@ -63,13 +63,12 @@ class Login extends Component {
   }
 
   onGoogleSignInFailure() {
-    console.log('sign in failure!');
+    console.error('sign in failure!');
   }
 
   render() {
     const { user } = this.props;
 
-    console.log('user', user);
     if (user != null) {
       return <Redirect to="/home" />;
     }

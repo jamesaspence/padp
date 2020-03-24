@@ -1,6 +1,5 @@
 import { AUTH_STATUS, STATUSES } from '../actions/user';
 import { getAccessToken } from '../../service/localStorage';
-import * as jwt from 'jsonwebtoken';
 
 export const DEFAULT_STATE = {
   status: null,
@@ -16,12 +15,8 @@ export const getPreloadedState = () => {
     return DEFAULT_STATE;
   }
 
-  const user = jwt.decode(token);
-
   return {
     ...DEFAULT_STATE,
-    status: STATUSES.SUCCESS,
-    user,
     token
   };
 };

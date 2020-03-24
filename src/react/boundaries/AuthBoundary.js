@@ -1,30 +1,59 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { STATUSES } from '../../redux/actions/user';
+import { authFailure, authLoading, authSuccess, STATUSES } from '../../redux/actions/user';
+import apiService from '../../api/apiService';
+import * as jwt from 'jsonwebtoken';
+import Loader from '../components/Loader';
 
-const AuthBoundary = ({ children }) => {
-  const selectUserStatus = state => state.user.status;
-  const selectUser = state => state.user.user;
+const mapStateToProps = state => ({
+  user: state.user.user,
+  status: state.user.status,
+  token: state.user.token
+});
 
-  const status = useSelector(selectUserStatus);
-  const user = useSelector(selectUser);
+const mapDispatchToProps = dispatch => ({
+  dispatchFailure: (e = null) => dispatch(authFailure(e)),
+  dispatchLoading: () => dispatch(authLoading()),
+  dispatchSuccess: (token, user) => dispatch(authSuccess(token, user))
+});
 
-  console.log('authBoundaryUser', user);
-  console.log('status', status);
-  //if user is not null or loading is current status, allow through
-  //Otherwise, redirect
-  if (user != null || status === STATUSES.LOADING) {
-    console.log('passing through???');
-    return (
-      <>
-        {children}
-      </>
-    );
+class AuthBoundary extends Component {
+  componentDidMount() {
+    const { token, status, dispatchFailure, dispatchLoading, dispatchSuccess } = this.props;
+
+    if (typeof token !== 'string' || token.trim().length < 1) {
+      dispatchFailure();
+      return;
+    }
+
+    if (status != null) {
+      return;
+    }
+
+    dispatchLoading();
+
+    apiService.verify(token)
+      .then(() => jwt.decode(token))
+      .then(user => dispatchSuccess(token, user))
+      .catch(e => dispatchFailure(e));
   }
 
-  console.log('redirecting!!');
-  return <Redirect to="/login" />;
-};
+  render() {
+    const { user, status, children } = this.props;
 
-export default AuthBoundary;
+    if (user == null) {
+      if (status == null || status === STATUSES.LOADING) {
+        return <Loader />;
+      } else {
+        return (
+          <Redirect to="/login" />
+        );
+      }
+    }
+
+    return <>{children}</>;
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthBoundary);

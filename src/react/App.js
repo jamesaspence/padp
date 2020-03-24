@@ -10,11 +10,13 @@ const App = () => {
   return (
     <div className="app">
       <Logo/>
-      <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/home" render={() => (<AuthBoundary><Home /></AuthBoundary>)} />
-        <Route path="*" render={() => <Redirect to="/home" />} />
-      </Switch>
+      <AuthBoundary>
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/home" component={Home} />
+          <Route path="*" render={() => <Redirect to="/home" />} />
+        </Switch>
+      </AuthBoundary>
     </div>
   )
 };
