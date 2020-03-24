@@ -25,22 +25,6 @@ export const verifyAuth = token => async dispatch => {
   dispatch(authSuccess(token, jwt.decode(token)));
 };
 
-export const authenticate = token => async dispatch => {
-  dispatch(authLoading());
-
-  let response;
-  try {
-    response = await apiService.authenticate(token);
-  } catch (e) {
-    console.error('e', e);
-    dispatch(authFailure(e));
-    return;
-  }
-
-  const accessToken = response.data.token;
-  dispatch(authSuccess(accessToken, jwt.decode(accessToken)));
-};
-
 export const authFailure = (e = null) => ({
   type: AUTH_STATUS,
   status: STATUSES.FAILURE,

@@ -1,0 +1,21 @@
+@import '~bulma/sass/utilities/all';
+@import '~bulma/sass/elements/title';
+
+.login-page {
+  .main-content {
+    background-color: rgba(115, 155, 150, 0.95);
+  }
+
+  .login-wrap {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-card {
+    background-color: #fbfbfb;
+    box-shadow: 1px 1px 5px #8f8f8f;
+    padding: 20px;
+  }
+}

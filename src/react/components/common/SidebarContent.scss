@@ -1,0 +1,9 @@
+@import '~bulma/sass/utilities/all';
+@import '~bulma/sass/grid/columns';
+
+$borderColor: rgba(10, 10, 10, 0.1);
+
+.sidebar-content.column {
+  border-right: 1px solid $borderColor;
+  padding-right: 0;
+}

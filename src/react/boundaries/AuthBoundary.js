@@ -1,30 +1,59 @@
-import React, { Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
-import { STATUSES } from '../../redux/actions/user';
+import { Redirect } from 'react-router-dom';
+import { authFailure, authLoading, authSuccess, STATUSES } from '../../redux/actions/user';
+import apiService from '../../api/apiService';
+import * as jwt from 'jsonwebtoken';
+import Loader from '../components/Loader';
 
-const mapStateToProps = ({ user: { status, user } }) => ({
-  status,
-  user
+const mapStateToProps = state => ({
+  user: state.user.user,
+  status: state.user.status,
+  token: state.user.token
 });
 
 const mapDispatchToProps = dispatch => ({
-  redirectToLogin: () => push('/login')
+  dispatchFailure: (e = null) => dispatch(authFailure(e)),
+  dispatchLoading: () => dispatch(authLoading()),
+  dispatchSuccess: (token, user) => dispatch(authSuccess(token, user))
 });
 
-const AuthBoundary = ({ status, user, children, redirectToLogin }) => {
-  //if user is not null or loading is current status, allow through
-  //Otherwise, redirect
-  if (user != null || status === STATUSES.LOADING) {
-    return (
-      <Fragment>
-        {children}
-      </Fragment>
-    );
+class AuthBoundary extends Component {
+  componentDidMount() {
+    const { token, status, dispatchFailure, dispatchLoading, dispatchSuccess } = this.props;
+
+    if (typeof token !== 'string' || token.trim().length < 1) {
+      dispatchFailure();
+      return;
+    }
+
+    if (status != null) {
+      return;
+    }
+
+    dispatchLoading();
+
+    apiService.verify(token)
+      .then(() => jwt.decode(token))
+      .then(user => dispatchSuccess(token, user))
+      .catch(e => dispatchFailure(e));
   }
 
-  redirectToLogin();
-  return null;
-};
+  render() {
+    const { user, status, children } = this.props;
+
+    if (user == null) {
+      if (status == null || status === STATUSES.LOADING) {
+        return <Loader />;
+      } else {
+        return (
+          <Redirect to="/login" />
+        );
+      }
+    }
+
+    return <>{children}</>;
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthBoundary);
