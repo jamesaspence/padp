@@ -1,0 +1,19 @@
+@import '~bulma/sass/utilities/all';
+@import '~bulma/sass/elements/title';
+@import '~bulma/sass/elements/content';
+@import '~bulma/sass/elements/form';
+@import '~bulma/sass/elements/button';
+
+.home {
+  .main-content {
+    background-color: #f0f0f0;
+  }
+
+  .VoteForm {
+    box-sizing: border-box;
+
+    .input {
+      box-sizing: border-box;
+    }
+  }
+}
