@@ -1,0 +1,12 @@
+.ContentCard__wrap {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .ContentCard {
+    background-color: #fbfbfb;
+    box-shadow: 1px 1px 5px #8f8f8f;
+    padding: 20px;
+  }
+}

@@ -12,6 +12,7 @@ import { authFailure, authLoading, authSuccess } from '../../redux/actions/user'
 import { push } from 'connected-react-router';
 import { setAccessToken } from '../../service/localStorage';
 import { Redirect } from 'react-router-dom';
+import ContentCard from '../components/common/ContentCard';
 
 const mapStateToProps = state => ({
   user: state.user.user
@@ -78,18 +79,16 @@ class Login extends Component {
         <ContentContainer>
           <MainContent>
             <ContentWrap>
-              <div className="login-wrap">
-                <div className="login-card">
-                  <h2 className="subtitle">Find a place to eat with minimal bullshit.</h2>
-                  <p className="content">Sign in to get started.</p>
-                  <GoogleLogin
-                    onSuccess={this.onGoogleSignInSuccess}
-                    onFailure={this.onGoogleSignInFailure}
-                    clientId={process.env.REACT_APP_CLIENT_ID}
-                    render={({ onClick, disabled}) => <LoginButton onClick={onClick} disabled={disabled} loading={disabled} />}
-                  />
-                </div>
-              </div>
+              <ContentCard>
+                <h2 className="subtitle">Find a place to eat with minimal bullshit.</h2>
+                <p className="content">Sign in to get started.</p>
+                <GoogleLogin
+                  onSuccess={this.onGoogleSignInSuccess}
+                  onFailure={this.onGoogleSignInFailure}
+                  clientId={process.env.REACT_APP_CLIENT_ID}
+                  render={({ onClick, disabled}) => <LoginButton onClick={onClick} disabled={disabled} loading={disabled} />}
+                />
+              </ContentCard>
             </ContentWrap>
           </MainContent>
         </ContentContainer>
