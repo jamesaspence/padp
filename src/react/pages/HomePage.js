@@ -1,5 +1,5 @@
 import React from 'react';
-import './Home.scss';
+import './HomePage.scss';
 import ContentContainer from '../components/common/ContentContainer';
 import MainContent from '../components/common/MainContent';
 import ContentCard from '../components/common/ContentCard';
@@ -7,7 +7,7 @@ import ContentWrap from '../components/common/ContentWrap';
 import BlockLink from '../components/common/BlockLink';
 import VoteFormContainer from '../components/vote/VoteFormContainer';
 
-const Home = () => {
+const HomePage = () => {
   return (
     <div className="home">
       <ContentContainer>
@@ -34,4 +34,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

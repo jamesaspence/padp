@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Login.scss';
+import './LoginPage.scss';
 import ContentContainer from '../components/common/ContentContainer';
 import MainContent from '../components/common/MainContent';
 import ContentWrap from '../components/common/ContentWrap';
@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
   redirectHome: () => dispatch(push('/home'))
 });
 
-class Login extends Component {
+class LoginPage extends Component {
 
   constructor(props) {
     super(props);
@@ -97,4 +97,4 @@ class Login extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
