@@ -5,6 +5,7 @@ import MainContent from '../components/common/MainContent';
 import ContentCard from '../components/common/ContentCard';
 import ContentWrap from '../components/common/ContentWrap';
 import BlockLink from '../components/common/BlockLink';
+import VoteFormContainer from '../components/vote/VoteFormContainer';
 
 const Home = () => {
   return (
@@ -24,15 +25,7 @@ const Home = () => {
               <p className="content">
                 Been invited to an outing? Enter the provided URL so we can get you set up.
               </p>
-              <form className="VoteForm">
-                <div className="field">
-                  <label htmlFor="voteUrl" className="label">Vote URL</label>
-                  <div className="control">
-                    <input type="text" id="voteUrl" className="input"/>
-                  </div>
-                </div>
-                <button className="button is-primary is-medium" type="button">Submit</button>
-              </form>
+              <VoteFormContainer/>
             </ContentCard>
           </ContentWrap>
         </MainContent>
