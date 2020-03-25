@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import VoteForm from './VoteForm';
 import { STATUS_LOADING } from '../../../redux/actions';
@@ -10,12 +10,21 @@ const onUrlSubmit = (voteUrl, dispatch) => {
 };
 
 const VoteFormContainer = () => {
+  const [validationError, setValidationError] = useState(null);
+
   const selectCurrentVoteStatus = state => state.voting.currentVote.status;
   const dispatch = useDispatch();
 
   const onSubmit = event => {
     event.preventDefault();
+    setValidationError(null);
+
     const voteUrl = event.target.querySelector('#voteUrl').value;
+
+    if (typeof voteUrl !== 'string' || voteUrl.length < 1) {
+      setValidationError('Please enter a valid URL.');
+      return;
+    }
     onUrlSubmit(voteUrl, dispatch);
   };
 
@@ -23,7 +32,7 @@ const VoteFormContainer = () => {
   const isLoading = status === STATUS_LOADING;
 
   return (
-    <VoteForm disabled={isLoading} loading={isLoading} onSubmit={onSubmit} />
+    <VoteForm disabled={isLoading} validationError={validationError} loading={isLoading} onSubmit={onSubmit} />
   )
 };
 
