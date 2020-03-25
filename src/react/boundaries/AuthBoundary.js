@@ -5,11 +5,13 @@ import { authFailure, authLoading, authSuccess, STATUSES } from '../../redux/act
 import apiService from '../../api/apiService';
 import * as jwt from 'jsonwebtoken';
 import Loader from '../components/Loader';
+import { clearAccessToken } from '../../service/localStorage';
 
 const mapStateToProps = state => ({
   user: state.user.user,
   status: state.user.status,
-  token: state.user.token
+  token: state.user.token,
+  pathname: state.router.location.pathname
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -36,16 +38,19 @@ class AuthBoundary extends Component {
     apiService.verify(token)
       .then(() => jwt.decode(token))
       .then(user => dispatchSuccess(token, user))
-      .catch(e => dispatchFailure(e));
+      .catch(e => {
+        clearAccessToken();
+        dispatchFailure(e)
+      });
   }
 
   render() {
-    const { user, status, children } = this.props;
+    const { user, status, children, pathname } = this.props;
 
     if (user == null) {
       if (status == null || status === STATUSES.LOADING) {
         return <Loader />;
-      } else {
+      } else if (pathname !== '/login') {
         return (
           <Redirect to="/login" />
         );

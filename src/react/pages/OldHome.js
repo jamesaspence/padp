@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
   finishSelections: selections => dispatch(finishSelections(selections))
 });
 
-class Home extends Component {
+class OldHome extends Component {
   constructor(props) {
     super(props);
 
@@ -133,4 +133,4 @@ class Home extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(OldHome);
