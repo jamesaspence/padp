@@ -20,7 +20,7 @@ const Home = () => {
               <p className="content">
                 Want to go somewhere? Create a new vote and share the link, so you and your friends can vote!
               </p>
-              <BlockLink to="/new">NEW VOTE</BlockLink>
+              <BlockLink to="/select">NEW VOTE</BlockLink>
               <h2 className="title is-2">Join a Vote</h2>
               <p className="content">
                 Been invited to an outing? Enter the provided URL so we can get you set up.
